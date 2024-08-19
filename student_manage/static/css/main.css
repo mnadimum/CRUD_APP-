@@ -1,0 +1,12 @@
+.navbar-brand{
+    font-size: 60px;
+    color: blueviolet;
+    padding-right: 200px;
+
+}
+
+.navbar-nav .nav-link{
+    font-size: 20px;
+    color: rgb(165, 42, 104);
+
+}

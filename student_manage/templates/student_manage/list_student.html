@@ -1,0 +1,90 @@
+{% extends "student_manage/base.html" %} {% block content1 %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email ID</th>
+      <th scope="col">Phone No</th>
+      <th scope="col">Branch</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in student %}
+    <tr>
+      <td>{{s.id}}</td>
+      <td>{{s.fname}}</td>
+      <td>{{s.lname}}</td>
+      <td>{{s.email}}</td>
+      <td>{{s.phone}}</td>
+      <td>{{s.branch}}</td>
+      <td>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#viewModal{{s.id}}" class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-circle-info"></i>View
+        </button>
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="viewModal{{s.id}}"
+        tabindex="-1"
+        aria-labelledby="viewModalLabel{{s.id}}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="viewModalLabel{{s.id}}">Student: {{s.fname}} {{s.lname}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li><strong>Student's ID: </strong>{{s.id}}</li>
+                    <li><strong>Student's First Name: </strong>{{s.fname}}</li>
+                    <li><strong>Student's Last Name: </strong>{{s.lname}}</li>
+                    <li><strong>Student's Email: </strong>{{s.email}}</li>
+                    <li><strong>Student's Phone: </strong>{{s.phone}}</li>
+                    <li><strong>Student's Branch: </strong>{{s.branch}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <a href="{% url 'update' s.id %}" class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i>Update</a>
+        <!-- Button trigger modal -->
+        <!-- DElete Modal -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{s.id}}"><i class="fa-solid fa-trash"></i>Delete</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal{{s.id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{s.id}}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="deleteModalLabel{{s.id}}">Confirmation for delete</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          <div class="modal-body">
+            <p>Are you sure to delete? Student: {{s.fname}} {{s.lname}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+            <form action="{% url 'delete' s.id %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <input type="submit" value="Yes" class="btn btn-primary">
+            </form>
+        </div>
+        </div>
+        </div>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{%endblock%}
